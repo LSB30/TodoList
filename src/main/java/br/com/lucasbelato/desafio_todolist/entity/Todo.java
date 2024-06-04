@@ -14,11 +14,15 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
 
     private String description;
+    @Column(name = "completed")
 
     private Boolean completed;
+    @Column(name = "priority")
 
     private int priority;
 
