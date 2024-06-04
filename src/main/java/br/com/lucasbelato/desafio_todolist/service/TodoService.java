@@ -30,4 +30,10 @@ public class TodoService {
                 .and(Sort.by("name").ascending());
         return todoRepository.findAll(sort);
     }
+
+    public List<Todo> deleteTodo(UUID todoId) {
+        todoRepository.deleteById(todoId);
+
+        return listTodo();
+    }
 }
