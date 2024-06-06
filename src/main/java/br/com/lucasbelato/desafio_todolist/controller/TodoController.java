@@ -32,6 +32,11 @@ public class TodoController {
         return ResponseEntity.ok(todoList);
     }
 
+    @PutMapping("{todoId}")
+    public ResponseEntity<List<Todo>>updateTodo(@PathVariable("todoId") String todoId, @RequestBody UpdateDto updateDto) {
+        var todoList = todoService.updateTodo(todoId,updateDto);
+        return ResponseEntity.ok(todoList);
+    }
 
     @DeleteMapping("{todoId}")
     public ResponseEntity<List<Todo>>deleteTodo(@PathVariable("todoId") String todoId) {

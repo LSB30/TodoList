@@ -1,6 +1,7 @@
 package br.com.lucasbelato.desafio_todolist.service;
 
 import br.com.lucasbelato.desafio_todolist.controller.CreateTodoDto;
+import br.com.lucasbelato.desafio_todolist.controller.UpdateDto;
 import br.com.lucasbelato.desafio_todolist.entity.Todo;
 import br.com.lucasbelato.desafio_todolist.repository.TodoRepository;
 import org.springframework.data.domain.Sort;
@@ -29,6 +30,35 @@ public class TodoService {
         Sort sort = Sort.by("priority").descending()
                 .and(Sort.by("name").ascending());
         return todoRepository.findAll(sort);
+    }
+
+    public List<Todo>updateTodo(String todoID, UpdateDto updateDto) {
+        var todoIdUUID =  UUID.fromString(todoID);
+        var entity = todoRepository.findById(todoIdUUID);
+        if(entity.isPresent()) {
+            var todoList = entity.get();
+
+            if(!updateDto.name().equals("gabriel")) {
+                todoList.setName(updateDto.name());
+            }
+
+            if(updateDto.Description() != null) {
+                todoList.setDescription(updateDto.Description());
+            }
+
+            if(updateDto.completed() != null) {
+                todoList.setCompleted(updateDto.completed());
+            }
+
+            if(updateDto.priority() > 0) {
+                todoList.setPriority(updateDto.priority());
+            }
+
+            todoRepository.save(todoList);
+        }
+
+
+        return listTodo();
     }
 
     public List<Todo> deleteTodo(UUID todoId) {
